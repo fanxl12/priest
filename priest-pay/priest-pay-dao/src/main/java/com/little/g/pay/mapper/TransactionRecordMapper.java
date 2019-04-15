@@ -11,6 +11,8 @@ public interface TransactionRecordMapper {
 
     int deleteByExample(TransactionRecordExample example);
 
+    int deleteByPrimaryKey(Long id);
+
     int insert(TransactionRecord record);
 
     int insertSelective(TransactionRecord record);
@@ -19,7 +21,13 @@ public interface TransactionRecordMapper {
 
     List<TransactionRecord> selectByExample(TransactionRecordExample example);
 
+    TransactionRecord selectByPrimaryKey(Long id);
+
     int updateByExampleSelective(@Param("record") TransactionRecord record, @Param("example") TransactionRecordExample example);
 
     int updateByExample(@Param("record") TransactionRecord record, @Param("example") TransactionRecordExample example);
+
+    int updateByPrimaryKeySelective(TransactionRecord record);
+
+    int updateByPrimaryKey(TransactionRecord record);
 }
