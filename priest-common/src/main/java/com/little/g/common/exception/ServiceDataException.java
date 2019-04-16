@@ -18,6 +18,10 @@ public class ServiceDataException extends RuntimeException {
         this.code = code;
     }
 
+    public ServiceDataException(Throwable cause) {
+        super(cause);
+    }
+
     public ServiceDataException(String message, Throwable cause) {
 		super(message, cause);
 	}
