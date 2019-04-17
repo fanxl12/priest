@@ -11,15 +11,11 @@ import com.little.g.common.enums.GenderEnum;
 import com.little.g.common.exception.ServiceDataException;
 import com.little.g.user.model.OAuthUser;
 import com.little.g.user.service.oauth.model.WechatOAuthUser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public  class WechatCustomOAuthService implements CustomOAuthService {
-
-    private static  final Logger logger = LoggerFactory.getLogger(WechatCustomOAuthService.class);
 
     private final OAuth20Service oAuth20Service;
 
@@ -44,7 +40,8 @@ public  class WechatCustomOAuthService implements CustomOAuthService {
 
     @Override
     public String getAuthorizationUrl() {
-        return oAuth20Service.getAuthorizationUrl();
+        return oAuth20Service.createAuthorizationUrlBuilder()
+                .scope("snsapi_userinfo").build();
     }
 
     @Override
@@ -73,6 +70,15 @@ public  class WechatCustomOAuthService implements CustomOAuthService {
             oAuthUser.setUpdateTime(System.currentTimeMillis());
             return oAuthUser;
 
+        } catch (Exception e){
+            throw new ServiceDataException(e);
+        }
+    }
+
+    @Override
+    public OAuth2AccessToken getToken(String code) {
+        try {
+            return oAuth20Service.getAccessToken(code);
         } catch (Exception e){
             throw new ServiceDataException(e);
         }

@@ -26,4 +26,10 @@ public interface CustomOAuthService{
      */
     OAuthUser getOAuthUser(OAuth2AccessToken accessToken);
 
+    /**
+     * 获取token
+     * @return
+     */
+    OAuth2AccessToken getToken(String code);
+
 }

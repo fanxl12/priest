@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.little.g.user.mapper.OAuthUserMapper">
   <resultMap id="BaseResultMap" type="com.little.g.user.model.OAuthUser">
+    <id column="oauth_type" jdbcType="VARCHAR" property="oauthType" />
+    <id column="openid" jdbcType="VARCHAR" property="openid" />
     <result column="uid" jdbcType="BIGINT" property="uid" />
-    <result column="oauth_type" jdbcType="VARCHAR" property="oauthType" />
-    <result column="openid" jdbcType="VARCHAR" property="openid" />
     <result column="access_token" jdbcType="VARCHAR" property="accessToken" />
     <result column="expires_in" jdbcType="INTEGER" property="expiresIn" />
     <result column="refresh_token" jdbcType="VARCHAR" property="refreshToken" />
@@ -74,7 +74,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    `uid`, oauth_type, openid, access_token, expires_in, refresh_token, re_expires_in, 
+    oauth_type, openid, `uid`, access_token, expires_in, refresh_token, re_expires_in, 
     `name`, avatar, gender, update_time, unionid
   </sql>
   <select id="selectByExample" parameterType="com.little.g.user.model.OAuthUserExample" resultMap="BaseResultMap">
@@ -91,6 +91,18 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByPrimaryKey" parameterType="com.little.g.user.model.OAuthUserKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from oauth_user
+    where oauth_type = #{oauthType,jdbcType=VARCHAR}
+      and openid = #{openid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.little.g.user.model.OAuthUserKey">
+    delete from oauth_user
+    where oauth_type = #{oauthType,jdbcType=VARCHAR}
+      and openid = #{openid,jdbcType=VARCHAR}
+  </delete>
   <delete id="deleteByExample" parameterType="com.little.g.user.model.OAuthUserExample">
     delete from oauth_user
     <if test="_parameter != null">
@@ -98,12 +110,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.little.g.user.model.OAuthUser">
-    insert into oauth_user (`uid`, oauth_type, openid, 
+    insert into oauth_user (oauth_type, openid, `uid`, 
       access_token, expires_in, refresh_token, 
       re_expires_in, `name`, avatar, 
       gender, update_time, unionid
       )
-    values (#{uid,jdbcType=BIGINT}, #{oauthType,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, 
+    values (#{oauthType,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{uid,jdbcType=BIGINT}, 
       #{accessToken,jdbcType=VARCHAR}, #{expiresIn,jdbcType=INTEGER}, #{refreshToken,jdbcType=VARCHAR}, 
       #{reExpiresIn,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
       #{gender,jdbcType=TINYINT}, #{updateTime,jdbcType=BIGINT}, #{unionid,jdbcType=VARCHAR}
@@ -112,14 +124,14 @@
   <insert id="insertSelective" parameterType="com.little.g.user.model.OAuthUser">
     insert into oauth_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="uid != null">
-        `uid`,
-      </if>
       <if test="oauthType != null">
         oauth_type,
       </if>
       <if test="openid != null">
         openid,
+      </if>
+      <if test="uid != null">
+        `uid`,
       </if>
       <if test="accessToken != null">
         access_token,
@@ -150,14 +162,14 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="uid != null">
-        #{uid,jdbcType=BIGINT},
-      </if>
       <if test="oauthType != null">
         #{oauthType,jdbcType=VARCHAR},
       </if>
       <if test="openid != null">
         #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
       </if>
       <if test="accessToken != null">
         #{accessToken,jdbcType=VARCHAR},
@@ -197,14 +209,14 @@
   <update id="updateByExampleSelective" parameterType="map">
     update oauth_user
     <set>
-      <if test="record.uid != null">
-        `uid` = #{record.uid,jdbcType=BIGINT},
-      </if>
       <if test="record.oauthType != null">
         oauth_type = #{record.oauthType,jdbcType=VARCHAR},
       </if>
       <if test="record.openid != null">
         openid = #{record.openid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uid != null">
+        `uid` = #{record.uid,jdbcType=BIGINT},
       </if>
       <if test="record.accessToken != null">
         access_token = #{record.accessToken,jdbcType=VARCHAR},
@@ -240,9 +252,9 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update oauth_user
-    set `uid` = #{record.uid,jdbcType=BIGINT},
-      oauth_type = #{record.oauthType,jdbcType=VARCHAR},
+    set oauth_type = #{record.oauthType,jdbcType=VARCHAR},
       openid = #{record.openid,jdbcType=VARCHAR},
+      `uid` = #{record.uid,jdbcType=BIGINT},
       access_token = #{record.accessToken,jdbcType=VARCHAR},
       expires_in = #{record.expiresIn,jdbcType=INTEGER},
       refresh_token = #{record.refreshToken,jdbcType=VARCHAR},
@@ -255,5 +267,57 @@
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.little.g.user.model.OAuthUser">
+    update oauth_user
+    <set>
+      <if test="uid != null">
+        `uid` = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="accessToken != null">
+        access_token = #{accessToken,jdbcType=VARCHAR},
+      </if>
+      <if test="expiresIn != null">
+        expires_in = #{expiresIn,jdbcType=INTEGER},
+      </if>
+      <if test="refreshToken != null">
+        refresh_token = #{refreshToken,jdbcType=VARCHAR},
+      </if>
+      <if test="reExpiresIn != null">
+        re_expires_in = #{reExpiresIn,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="unionid != null">
+        unionid = #{unionid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where oauth_type = #{oauthType,jdbcType=VARCHAR}
+      and openid = #{openid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.little.g.user.model.OAuthUser">
+    update oauth_user
+    set `uid` = #{uid,jdbcType=BIGINT},
+      access_token = #{accessToken,jdbcType=VARCHAR},
+      expires_in = #{expiresIn,jdbcType=INTEGER},
+      refresh_token = #{refreshToken,jdbcType=VARCHAR},
+      re_expires_in = #{reExpiresIn,jdbcType=INTEGER},
+      `name` = #{name,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=TINYINT},
+      update_time = #{updateTime,jdbcType=BIGINT},
+      unionid = #{unionid,jdbcType=VARCHAR}
+    where oauth_type = #{oauthType,jdbcType=VARCHAR}
+      and openid = #{openid,jdbcType=VARCHAR}
   </update>
 </mapper>

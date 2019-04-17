@@ -18,7 +18,7 @@ import java.util.List;
 @Configuration
 public class OAuthConfig {
 
-    private static final String CALLBACK_URL = "http://tianmaying.com/oauth/%s/callback";
+    private static final String CALLBACK_URL = "http://192.168.9.114:8080/oauth/%s/callback";
 
     @Value("${oAuth.weixin.appId}")private String weixinAppId;
     @Value("${oAuth.weixin.appSecret}") String weixinAppSecret;

@@ -34,6 +34,7 @@ public class WechatApi20 extends DefaultApi20 {
         parameters.add(OAuthConstants.RESPONSE_TYPE, "code");
         parameters.add("appid", apiKey);
 
+
         if (callback != null) {
             parameters.add(OAuthConstants.REDIRECT_URI, callback);
         }
@@ -45,8 +46,9 @@ public class WechatApi20 extends DefaultApi20 {
         if (state != null) {
             parameters.add(OAuthConstants.STATE, state);
         }
+        parameters.add("connect_redirect", "1#wechat_redirect");
 
-        return parameters.appendTo("https://open.weixin.qq.com/connect/qrconnect");
+        return parameters.appendTo("https://open.weixin.qq.com/connect/oauth2/authorize");
     }
 
     @Override

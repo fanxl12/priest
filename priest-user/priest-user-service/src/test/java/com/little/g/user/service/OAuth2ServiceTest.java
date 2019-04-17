@@ -17,7 +17,8 @@ public class OAuth2ServiceTest  extends BaseTest{
 
     @Test
     public void testGetCode(){
-        String aurl=oAuth20Service.getAuthorizationUrl();
+        String aurl=oAuth20Service.createAuthorizationUrlBuilder()
+                .scope("snsapi_userinfo").build();
         System.out.print(aurl);
     }
 
