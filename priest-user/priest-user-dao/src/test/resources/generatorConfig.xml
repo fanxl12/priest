@@ -68,9 +68,15 @@
 
             <table tableName="user">
             </table>
+
+            <table tableName="user_device_token" >
+            </table>
         -->
 
-        <table tableName="user_device_token" >
+
+
+        <table tableName="oauth_user" domainObjectName="OAuthUser" >
+            <columnOverride column="oauth_type" property="oauthType" />
         </table>
 
 

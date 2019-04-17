@@ -4,6 +4,7 @@ import com.little.g.common.ResultJson;
 import com.little.g.common.validate.annatations.DeviceId;
 import com.little.g.common.validate.annatations.DeviceType;
 import com.little.g.user.dto.UserDTO;
+import com.little.g.user.dto.UserJoininDTO;
 import com.little.g.user.params.UserUpdateParam;
 
 import javax.validation.Valid;
@@ -45,4 +46,22 @@ public interface UserService {
      * @return
      */
     boolean update(@Valid UserUpdateParam param);
+
+    /**
+     * 创建用户
+     * @param userDTO
+     * @return
+     */
+    Long addUser(UserDTO userDTO);
+
+    /**
+     * 创建注册返回值
+     * @param deviceId
+     * @param deviceType
+     * @param os
+     * @param user
+     * @return
+     */
+    UserJoininDTO createLoginReturn(@NotBlank String deviceId, Byte deviceType, String os, UserDTO user);
+
 }

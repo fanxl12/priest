@@ -31,4 +31,8 @@ public  abstract class ErrorCodes {
         }
         codeMsgs.put(code, msg);
     }
+
+    public static String getDefaultMsg(Integer code){
+        return codeMsgs.get(code);
+    }
 }

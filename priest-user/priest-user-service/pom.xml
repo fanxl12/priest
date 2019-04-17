@@ -103,6 +103,12 @@
 
 
         <dependency>
+            <groupId>com.github.scribejava</groupId>
+            <artifactId>scribejava-core</artifactId>
+        </dependency>
+
+
+        <dependency>
             <groupId>com.little.g</groupId>
             <artifactId>priest-user-api</artifactId>
         </dependency>
@@ -116,6 +122,8 @@
             <groupId>com.little.g</groupId>
             <artifactId>priest-user-token</artifactId>
         </dependency>
+
+
 
     </dependencies>
 

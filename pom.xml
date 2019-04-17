@@ -277,6 +277,12 @@
                 <version>2.1.3.RELEASE</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.github.scribejava</groupId>
+                <artifactId>scribejava-core</artifactId>
+                <version>6.5.1</version>
+            </dependency>
+
             <!-- Apache Dubbo  -->
 
             <dependency>

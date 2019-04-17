@@ -77,6 +77,13 @@ public class UserServiceImpl implements UserService {
             addUser(user);
         }
         //创建登录token
+        UserJoininDTO dto = createLoginReturn(deviceId, deviceType, os, user);
+
+        r.setData(dto);
+        return r;
+    }
+
+    public UserJoininDTO createLoginReturn(@NotBlank String deviceId, Byte deviceType, String os, UserDTO user) {
         UserDeviceTokenDTO token=tokenService.createToken(user.getUid(),deviceId,deviceType,os);
         UserJoininDTO dto=new UserJoininDTO();
         dto.setAccessExpiresIn(token.getAccessExpiresIn());
@@ -85,9 +92,7 @@ public class UserServiceImpl implements UserService {
         dto.setRefreshToken(token.getRefreshToken());
         dto.setUid(user.getUid());
         dto.setUser(user);
-
-        r.setData(dto);
-        return r;
+        return dto;
     }
 
 
