@@ -4,7 +4,7 @@ import com.little.g.common.exception.ServiceDataException;
 import com.little.g.common.utils.ReflectionUtil;
 import com.little.g.pay.PayErrorCodes;
 import com.little.g.thirdpay.dto.*;
-import com.little.g.thirdpay.enums.PayType;
+import com.little.g.common.enums.PayType;
 import com.little.g.thirdpay.exception.PayException;
 import com.little.g.thirdpay.params.*;
 import com.little.g.thirdpay.service.config.AlipayConfig;

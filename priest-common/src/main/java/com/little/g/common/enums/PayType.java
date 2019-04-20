@@ -1,4 +1,4 @@
-package com.little.g.thirdpay.enums;
+package com.little.g.common.enums;
 
 /**
  * 支付类型枚举

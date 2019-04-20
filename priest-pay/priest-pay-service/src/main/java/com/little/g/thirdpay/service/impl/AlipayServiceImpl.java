@@ -23,7 +23,7 @@ import com.little.g.thirdpay.dto.PayCallbackInfo;
 import com.little.g.thirdpay.dto.PrePayResult;
 import com.little.g.thirdpay.dto.PreRefundResult;
 import com.little.g.thirdpay.dto.RefundResult;
-import com.little.g.thirdpay.enums.PayType;
+import com.little.g.common.enums.PayType;
 import com.little.g.thirdpay.enums.ThirdPayStatus;
 import com.little.g.thirdpay.enums.ThirdRefundStatus;
 import com.little.g.thirdpay.exception.PayException;
@@ -66,7 +66,6 @@ public class AlipayServiceImpl extends ThirdPayService {
 
 
     public PrePayResult prepay(PrepayParams prepayParams) {
-        JSR303Util.validateParams(prepayParams);
         //实例化客户端
         //实例化具体API对应的request类,类名称和接口名称对应,当前调用接口名称：alipay.trade.app.pay
         AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
@@ -91,7 +90,6 @@ public class AlipayServiceImpl extends ThirdPayService {
 
 
     public PayCallbackInfo queryPay(QueryPayParams params){
-        JSR303Util.validateParams(params);
         AlipayTradeQueryModel model = new AlipayTradeQueryModel();
         model.setOutTradeNo(params.getPayOrderId());
         AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
@@ -166,7 +164,6 @@ public class AlipayServiceImpl extends ThirdPayService {
 
 
     public PreRefundResult refund(RefundParams params){
-        JSR303Util.validateParams(params);
         AlipayTradeRefundModel model = new AlipayTradeRefundModel();
         model.setOutTradeNo(params.getPayOrderId()); //与预授权转支付商户订单号相同，代表对该笔交易退款
         model.setTradeNo(params.getOutPayOrderId());
@@ -199,8 +196,6 @@ public class AlipayServiceImpl extends ThirdPayService {
     }
 
     public RefundResult queryRefund(QueryRefundParams params){
-
-        JSR303Util.validateParams(params);
         AlipayTradeFastpayRefundQueryModel model = new AlipayTradeFastpayRefundQueryModel();
         if(StringUtils.isEmpty(params.getRefundId())){
             model.setOutRequestNo(params.getRefundId());

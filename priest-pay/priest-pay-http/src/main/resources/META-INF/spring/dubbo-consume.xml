@@ -10,6 +10,8 @@
     <dubbo:protocol name="dubbo"/>
     <dubbo:registry address="${zookeeper.url}"/>
 
+    <dubbo:reference interface="com.little.g.thirdpay.api.ThirdpayApi" id="thirdpayApi" timeout="2000" />
+
 
 
 

@@ -21,7 +21,7 @@ import com.little.g.thirdpay.dto.PayCallbackInfo;
 import com.little.g.thirdpay.dto.PrePayResult;
 import com.little.g.thirdpay.dto.PreRefundResult;
 import com.little.g.thirdpay.dto.RefundResult;
-import com.little.g.thirdpay.enums.PayType;
+import com.little.g.common.enums.PayType;
 import com.little.g.thirdpay.enums.ThirdPayStatus;
 import com.little.g.thirdpay.enums.ThirdRefundStatus;
 import com.little.g.thirdpay.exception.PayException;
@@ -69,7 +69,6 @@ public class WxpayServiceImpl extends ThirdPayService {
 
     @Override
     public PrePayResult prepay(PrepayParams prepayParams) {
-        JSR303Util.validateParams(prepayParams);
 
         WxPayUnifiedOrderRequest orderRequest = new WxPayUnifiedOrderRequest();
         orderRequest.setBody(prepayParams.getComment());
@@ -92,7 +91,6 @@ public class WxpayServiceImpl extends ThirdPayService {
 
     @Override
     public PayCallbackInfo queryPay(QueryPayParams params) {
-        JSR303Util.validateParams(params);
 
         try {
             WxPayOrderQueryResult result=wxPayService.queryOrder(params.getOutPayOrderId(),params.getPayOrderId());
@@ -166,7 +164,6 @@ public class WxpayServiceImpl extends ThirdPayService {
 
     @Override
     public PreRefundResult refund(RefundParams params) {
-        JSR303Util.validateParams(params);
         WxPayRefundRequest request=new WxPayRefundRequest();
         request.setNotifyUrl(config.getRefundUrl());
         request.setOutRefundNo(params.getRefundId());
@@ -204,7 +201,6 @@ public class WxpayServiceImpl extends ThirdPayService {
 
     @Override
     public RefundResult queryRefund(QueryRefundParams params) {
-        JSR303Util.validateParams(params);
         try {
             WxPayRefundQueryResult queryRefundResponse=this.wxPayService.refundQuery(params.getOutPayOrderId(), params.getPayOrderId(), params.getOutRefundId(), params.getRefundId());
 
@@ -282,7 +278,6 @@ public class WxpayServiceImpl extends ThirdPayService {
 
     @Override
     public com.little.g.thirdpay.dto.EntPayResult entPay(EntpayParams params) {
-        JSR303Util.validateParams(params);
 
         EntPayRequest request=new EntPayRequest();
         request.setAmount(params.getAmount().intValue());
