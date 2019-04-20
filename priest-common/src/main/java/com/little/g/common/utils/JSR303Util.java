@@ -1,4 +1,4 @@
-package com.little.g.dubbo.utils;
+package com.little.g.common.utils;
 
 
 import javax.validation.ConstraintViolation;
@@ -7,9 +7,6 @@ import javax.validation.Validator;
 import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
-/**
- * Created by wangzhen on 15/11/25.
- */
 public class JSR303Util {
 
 

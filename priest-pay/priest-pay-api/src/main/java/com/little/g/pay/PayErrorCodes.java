@@ -1,3 +1,4 @@
+
 package com.little.g.pay;
 
 import com.little.g.common.error.ErrorCodeDiv;
@@ -9,6 +10,7 @@ import com.little.g.common.error.ErrorCodes;
 public class PayErrorCodes extends ErrorCodes{
 
     public static final Integer PAY_ERROR = 40000;
+    public static final Integer THIRDPAY_ERROR = 40100;
 
 
     public PayErrorCodes() {
@@ -17,6 +19,7 @@ public class PayErrorCodes extends ErrorCodes{
 
     @Override
     protected void addCodes() {
-        addCode2Map(PAY_ERROR,"pay error");
+        addCode2Map(PAY_ERROR,"mag.pay.error");
+        addCode2Map(THIRDPAY_ERROR,"msg.thirdpay.error");
     }
 }

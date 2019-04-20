@@ -1,7 +1,7 @@
 package com.little.g.dubbo.filter;
 
 import com.little.g.common.ResultJson;
-import com.little.g.dubbo.utils.JSR303Util;
+import com.little.g.common.utils.JSR303Util;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.common.Constants;
 import org.apache.dubbo.common.extension.Activate;
@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 
