@@ -32,6 +32,8 @@ public class WxpayConfig {
      *  退款回调
      */
     private String refundUrl;
+    @NotEmpty
+    private String notifyUrl;
 
 
 
@@ -84,6 +86,14 @@ public class WxpayConfig {
         this.refundUrl = refundUrl;
     }
 
+    public String getNotifyUrl() {
+        return notifyUrl;
+    }
+
+    public void setNotifyUrl(String notifyUrl) {
+        this.notifyUrl = notifyUrl;
+    }
+
     @Override
     public String toString() {
         return "WxpayConfig{" +
@@ -92,6 +102,8 @@ public class WxpayConfig {
                 ", mchKey='" + mchKey + '\'' +
                 ", keyPath='" + keyPath + '\'' +
                 ", tradeType='" + tradeType + '\'' +
+                ", refundUrl='" + refundUrl + '\'' +
+                ", notifyUrl='" + notifyUrl + '\'' +
                 '}';
     }
 }

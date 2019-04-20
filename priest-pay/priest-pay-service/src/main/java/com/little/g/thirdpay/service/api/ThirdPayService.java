@@ -8,7 +8,9 @@ import com.little.g.common.enums.PayType;
 import com.little.g.thirdpay.exception.PayException;
 import com.little.g.thirdpay.params.*;
 import com.little.g.thirdpay.service.config.AlipayConfig;
+import com.little.g.thirdpay.service.config.WxpayConfig;
 import com.little.g.thirdpay.service.impl.AlipayServiceImpl;
+import com.little.g.thirdpay.service.impl.WxpayServiceImpl;
 
 import java.util.Map;
 
@@ -25,6 +27,11 @@ public abstract class ThirdPayService {
                 AlipayConfig config=new AlipayConfig();
                 ReflectionUtil.copyMapToObject(confs,config);
                 return new AlipayServiceImpl(config);
+            case PayType.WEXINPAY:
+                WxpayConfig wxpayConfig = new WxpayConfig();
+                ReflectionUtil.copyMapToObject(confs,wxpayConfig);
+                return new WxpayServiceImpl(wxpayConfig);
+
 
         }
         return null;

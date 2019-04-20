@@ -20,17 +20,17 @@ import java.util.List;
  */
 public class TransactionNumUtil {
 
-    private static int min=10000;
-    private static int max=99999;
+    private static int min=10;
+    private static int max=99;
 
-    private static Integer minsequence=100000;
-    private static Integer cursequence=100000;
-    private static Integer maxSequence=999999;
+    private static Integer minsequence=1000;
+    private static Integer cursequence=1000;
+    private static Integer maxSequence=9999;
 
     private static String pid=getPid();
 
 
-    private static final DateFormat format=new SimpleDateFormat("yyyyMMddHHmmddssSSS");
+    private static final DateFormat format=new SimpleDateFormat("yyMMddHHmmddssSSS");
 
     public static final String  PREFIX_TX_CHA="CHA";
 

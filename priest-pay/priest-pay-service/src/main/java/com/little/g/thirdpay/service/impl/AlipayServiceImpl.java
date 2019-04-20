@@ -53,7 +53,10 @@ public class AlipayServiceImpl extends ThirdPayService {
 
 
     public AlipayServiceImpl(AlipayConfig config) {
-        JSR303Util.validateParams(config);
+        String valid=JSR303Util.validateParams(config);
+        if(StringUtils.isNotEmpty(valid)){
+            throw new PayException(PayErrorCodes.THIRDPAY_ERROR,valid);
+        }
         this.config=config;
         alipayClient=new DefaultAlipayClient("https://openapi.alipay.com/gateway.do", config.getAppid(), config.getPrivatekey(), "json", "UTF-8", config.getPublickey(), "RSA2");
 

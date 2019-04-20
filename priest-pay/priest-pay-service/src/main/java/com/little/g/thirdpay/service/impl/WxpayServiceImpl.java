@@ -1,9 +1,11 @@
 package com.little.g.thirdpay.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.binarywang.wxpay.bean.entpay.EntPayRequest;
 import com.github.binarywang.wxpay.bean.entpay.EntPayResult;
 import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
 import com.github.binarywang.wxpay.bean.notify.WxPayRefundNotifyResult;
+import com.github.binarywang.wxpay.bean.order.WxPayAppOrderResult;
 import com.github.binarywang.wxpay.bean.request.WxPayRefundRequest;
 import com.github.binarywang.wxpay.bean.request.WxPayUnifiedOrderRequest;
 import com.github.binarywang.wxpay.bean.result.WxPayOrderQueryResult;
@@ -14,6 +16,7 @@ import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.service.impl.WxPayServiceImpl;
+import com.google.gson.JsonObject;
 import com.little.g.common.utils.CommonUtils;
 import com.little.g.common.utils.JSR303Util;
 import com.little.g.pay.PayErrorCodes;
@@ -54,7 +57,10 @@ public class WxpayServiceImpl extends ThirdPayService {
     DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 
     public WxpayServiceImpl(WxpayConfig config) {
-        JSR303Util.validateParams(config);
+        String valid=JSR303Util.validateParams(config);
+        if(StringUtils.isNotEmpty(valid)){
+            throw new PayException(PayErrorCodes.THIRDPAY_ERROR,valid);
+        }
         WxPayConfig payConfig=new WxPayConfig();
         BeanUtils.copyProperties(config,payConfig);
         wxPayService.setConfig(payConfig);
@@ -75,15 +81,17 @@ public class WxpayServiceImpl extends ThirdPayService {
         orderRequest.setOutTradeNo(prepayParams.getTradeno());
         orderRequest.setTotalFee(prepayParams.getMoney().intValue());
         orderRequest.setOpenid(prepayParams.getOpenid());
-        orderRequest.setSpbillCreateIp(prepayParams.getUserIp());
+        orderRequest.setSpbillCreateIp(CommonUtils.getLocalIp());
+        orderRequest.setNotifyUrl(config.getNotifyUrl());
+        orderRequest.setTradeType(config.getTradeType());
         Calendar c=Calendar.getInstance();
         orderRequest.setTimeStart(DateFormatUtils.format(c.getTime(),"yyyyMMddHHmmss"));
         //设置订单超时时间
         c.add(Calendar.HOUR,1);
         orderRequest.setTimeExpire(DateFormatUtils.format(c.getTime(),"yyyyMMddHHmmss"));
         try {
-            WxPayUnifiedOrderResult unifiOrder=wxPayService.createOrder(orderRequest);
-            return new PrePayResult(prepayParams.getTradeno(),unifiOrder.getXmlString(),unifiOrder.getPrepayId());
+            WxPayAppOrderResult unifiOrder=wxPayService.createOrder(orderRequest);
+            return new PrePayResult(prepayParams.getTradeno(),JSONObject.toJSONString(unifiOrder),unifiOrder.getPrepayId());
         } catch (WxPayException e) {
             throw new PayException(e);
         }
@@ -112,7 +120,9 @@ public class WxpayServiceImpl extends ThirdPayService {
         callback.setThirdPayStatus(genPayStatus(tradeState));
         callback.setFailCode(errCode);
         try {
-            callback.setPayTime(dateFormat.parse(timeEnd).getTime());
+            if(timeEnd != null) {
+                callback.setPayTime(dateFormat.parse(timeEnd).getTime());
+            }
         } catch (ParseException e) {
             logger.error("parseTimeError,timeEnd:{}", timeEnd, e);
         }

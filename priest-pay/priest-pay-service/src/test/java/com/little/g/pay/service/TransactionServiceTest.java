@@ -1,6 +1,6 @@
 package com.little.g.pay.service;
 
-import com.little.g.demo.BaseTest;
+import com.little.g.pay.BaseTest;
 import com.little.g.pay.api.TransactionService;
 import com.little.g.pay.dto.NormalUserAccount;
 import com.little.g.pay.dto.TransactionRecordDTO;
